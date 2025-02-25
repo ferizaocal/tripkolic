@@ -5,9 +5,7 @@ import { BsArrowDownRight } from "react-icons/bs";
 import { useFavoriteStore } from "@/store/favoriteStore";
 import { Tour } from "@/constants/tours";
 
-interface TourCardProps extends Tour {}
-
-const TourCard: React.FC<TourCardProps> = ({
+const TourCard: React.FC<Tour> = ({
   id,
   title,
   location,
@@ -24,7 +22,8 @@ const TourCard: React.FC<TourCardProps> = ({
   vehicle,
   features,
 }) => {
-  const { addToFavorites, removeFromFavorites, isFavorite } = useFavoriteStore();
+  const { addToFavorites, removeFromFavorites, isFavorite } =
+    useFavoriteStore();
   const isInFavorites = isFavorite(id);
 
   const handleFavoriteClick = () => {
@@ -62,7 +61,7 @@ const TourCard: React.FC<TourCardProps> = ({
           </div>
         )}
 
-        <button 
+        <button
           onClick={handleFavoriteClick}
           className="absolute top-2 right-2 p-1.5 bg-white rounded-md shadow-md transition-colors hover:bg-gray-50"
         >
