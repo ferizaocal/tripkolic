@@ -15,6 +15,7 @@ import { useFavoriteStore } from "@/store/favoriteStore";
 
 const Navbar = () => {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [hasActiveFilters, setHasActiveFilters] = useState(false);
   const favorites = useFavoriteStore((state) => state.favorites);
 
   return (
@@ -24,7 +25,9 @@ const Navbar = () => {
           <nav className="h-14 flex items-center justify-between">
             <div className="flex items-center gap-3 ">
               <button
-                className="text-gray-800 hover:text-gray-600"
+                className={`hover:text-gray-600 ${
+                  hasActiveFilters ? "text-[#F78410]" : "text-gray-800"
+                }`}
                 onClick={() => setIsFilterOpen(true)}
               >
                 <FontAwesomeIcon icon={faFilter} className="w-5 h-5" />
@@ -73,6 +76,7 @@ const Navbar = () => {
       <TourFilterModal
         isOpen={isFilterOpen}
         onClose={() => setIsFilterOpen(false)}
+        onFiltersChange={setHasActiveFilters}
       />
     </>
   );

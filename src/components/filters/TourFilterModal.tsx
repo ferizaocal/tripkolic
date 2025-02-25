@@ -19,9 +19,10 @@ interface FilterState {
 interface TourFilterModalProps {
   isOpen: boolean;
   onClose: () => void;
+  onFiltersChange: (hasFilters: boolean) => void;
 }
 
-const TourFilterModal = ({ isOpen, onClose }: TourFilterModalProps) => {
+const TourFilterModal = ({ isOpen, onClose, onFiltersChange }: TourFilterModalProps) => {
   const setFilteredTours = useTourStore((state) => state.setFilteredTours);
   const [selectedTab, setSelectedTab] = useState("TOURS");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -165,6 +166,16 @@ const TourFilterModal = ({ isOpen, onClose }: TourFilterModalProps) => {
   const handleSubmit = () => {
     const filteredTours = applyFilters(filters);
     setFilteredTours(filteredTours);
+    const hasActiveFilters = 
+      filters.location !== "" ||
+      filters.theme !== "" ||
+      filters.activities.length > 0 ||
+      filters.price !== defaultFilters.price ||
+      filters.startTime !== defaultFilters.startTime ||
+      filters.groupSize !== defaultFilters.groupSize ||
+      filters.vehicle !== "" ||
+      filters.features.length > 0;
+    onFiltersChange(hasActiveFilters);
     onClose();
   };
 
@@ -172,6 +183,7 @@ const TourFilterModal = ({ isOpen, onClose }: TourFilterModalProps) => {
     setFilters(defaultFilters);
     const filteredTours = applyFilters(defaultFilters);
     setFilteredTours(filteredTours);
+    onFiltersChange(false);
   };
 
   if (!isOpen) return null;

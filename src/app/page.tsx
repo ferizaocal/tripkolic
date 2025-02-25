@@ -1,12 +1,9 @@
 "use client";
-
-import { useState } from "react";
 import TourCard from "@/components/TourCard";
-import TourFilterModal from "@/components/filters/TourFilterModal";
 import { useTourStore } from "@/store/tourStore";
 
 export default function Home() {
-  const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
+ 
   const filteredTours = useTourStore((state) => state.filteredTours);
   const resetTours = useTourStore((state) => state.resetTours);
 
@@ -50,10 +47,7 @@ export default function Home() {
         )}
       </div>
 
-      <TourFilterModal
-        isOpen={isFilterModalOpen}
-        onClose={() => setIsFilterModalOpen(false)}
-      />
+      
     </main>
   );
 }
