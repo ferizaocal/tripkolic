@@ -1,20 +1,14 @@
 import Image from "next/image";
 import { FaStar } from "react-icons/fa";
-import { FaRegHeart, FaMapMarkerAlt } from "react-icons/fa";
+import { FaHeart, FaRegHeart, FaMapMarkerAlt } from "react-icons/fa";
 import { BsArrowDownRight } from "react-icons/bs";
+import { useFavoriteStore } from "@/store/favoriteStore";
+import { Tour } from "@/constants/tours";
 
-interface TourCardProps {
-  title: string;
-  location: string;
-  rating: number;
-  reviewCount: number;
-  originalPrice: number;
-  discountedPrice?: number;
-  discount?: number;
-  imageUrl: string;
-}
+interface TourCardProps extends Tour {}
 
 const TourCard: React.FC<TourCardProps> = ({
+  id,
   title,
   location,
   rating,
@@ -23,7 +17,40 @@ const TourCard: React.FC<TourCardProps> = ({
   discountedPrice,
   discount,
   imageUrl,
+  theme,
+  activities,
+  startTime,
+  groupSize,
+  vehicle,
+  features,
 }) => {
+  const { addToFavorites, removeFromFavorites, isFavorite } = useFavoriteStore();
+  const isInFavorites = isFavorite(id);
+
+  const handleFavoriteClick = () => {
+    if (isInFavorites) {
+      removeFromFavorites(id);
+    } else {
+      addToFavorites({
+        id,
+        title,
+        location,
+        rating,
+        reviewCount,
+        originalPrice,
+        discountedPrice,
+        discount,
+        imageUrl,
+        theme,
+        activities,
+        startTime,
+        groupSize,
+        vehicle,
+        features,
+      });
+    }
+  };
+
   return (
     <div className="relative w-full max-w-sm rounded-md overflow-hidden bg-white shadow h-[360px] flex flex-col">
       <div className="relative h-44 w-full flex-shrink-0">
@@ -35,8 +62,15 @@ const TourCard: React.FC<TourCardProps> = ({
           </div>
         )}
 
-        <button className="absolute top-2 right-2 p-1.5 bg-white rounded-md shadow-md">
-          <FaRegHeart className="text-[#6C6D73] text-lg" />
+        <button 
+          onClick={handleFavoriteClick}
+          className="absolute top-2 right-2 p-1.5 bg-white rounded-md shadow-md transition-colors hover:bg-gray-50"
+        >
+          {isInFavorites ? (
+            <FaHeart className="text-red-500 text-lg" />
+          ) : (
+            <FaRegHeart className="text-[#6C6D73] text-lg" />
+          )}
         </button>
 
         <div className="absolute bottom-2 left-2">
