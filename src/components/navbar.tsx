@@ -28,7 +28,7 @@ const Navbar = () => {
                 <FontAwesomeIcon icon={faBars} className="w-5 h-5" />
               </button>
               <span className="text-gray-800 text-sm font-medium">
-                Traveller's local market
+                Traveller&rsquo;s local market
               </span>
             </div>
 

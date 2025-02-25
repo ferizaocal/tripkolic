@@ -1,7 +1,6 @@
 import Image from "next/image";
 import { FaStar } from "react-icons/fa";
 import { FaRegHeart, FaMapMarkerAlt } from "react-icons/fa";
-import { HiArrowRight } from "react-icons/hi";
 import { BsArrowDownRight } from "react-icons/bs";
 
 interface TourCardProps {
